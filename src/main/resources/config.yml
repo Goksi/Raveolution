@@ -1,0 +1,9 @@
+BotInfo:
+  token: 'Put your token here'
+  ownerId: 'Put your discord id here'
+  guildId: 'Put your server id here'
+BotStatus:
+  status: 'DND' #Avaiable statuses: DND, ONLINE, IDLE, INVISIBLE
+  enableActivity: true
+  activity: 'PLAYING' #Avaiable activities: PLAYING, WATCHING, LISTENING, STREAMING
+  activityName: 'Raveolution'

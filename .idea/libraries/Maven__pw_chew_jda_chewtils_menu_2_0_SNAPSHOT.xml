@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: pw.chew:jda-chewtils-menu:2.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/pw/chew/jda-chewtils-menu/2.0-SNAPSHOT/jda-chewtils-menu-2.0-20220312.223000-9.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/pw/chew/jda-chewtils-menu/2.0-SNAPSHOT/jda-chewtils-menu-2.0-20220312.223000-9-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/pw/chew/jda-chewtils-menu/2.0-SNAPSHOT/jda-chewtils-menu-2.0-20220312.223000-9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
