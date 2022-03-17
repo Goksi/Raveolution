@@ -14,14 +14,17 @@ public class Main {
         if(token.equals("Put your token here") || token == null || token.equals("")){
             token = promt("Looks like you didnt put your token, you can set it up now: ");
             ConfigUtils.set("BotInfo.token", token);
+            bot.setEditCfg(true);
         }
         if(ownerId.equals("Put your discord id here") || ownerId == null || ownerId.equals("")){
             ownerId = promt("Looks like you didnt put your discord id, you can set it up now: ");
             ConfigUtils.set("BotInfo.ownerId", ownerId);
+            bot.setEditCfg(true);
         }
         if(guildId.equals("Put your server id here") || guildId == null || guildId.equals("")){
             guildId = promt("Looks like you didnt put your server id, you can set it up now: ");
             ConfigUtils.set("BotInfo.guildId", guildId);
+            bot.setEditCfg(true);
         }
         System.out.println("[Raveolution] Everything looks fine, starting websocket..");
         bot.setGuildId(guildId);

@@ -7,6 +7,9 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import tech.goksi.raveolution.events.Advertise;
+import tech.goksi.raveolution.sql.Database;
+import tech.goksi.raveolution.sql.SQLConnection;
 import tech.goksi.raveolution.utils.Config;
 import tech.goksi.raveolution.utils.ConfigUtils;
 
@@ -18,7 +21,10 @@ public class Bot {
     private String ownerId;
     private final Config conf;
     private static Bot instance;
+    private SQLConnection sql;
     private JDA jda;
+    private Database db;
+    private boolean editCfg = false;
     public Bot(){
         this.conf = new Config();
         instance = this;
@@ -27,10 +33,12 @@ public class Bot {
 
 
     public void start(){
-
-
+        sql = new SQLConnection();
+        sql.connect();
+        db = new Database();
+        db.createTable();
         /*start of bot initialization*/
-        JDABuilder jdab = JDABuilder.createDefault(token);
+        JDABuilder jdaB = JDABuilder.createDefault(token);
         CommandClientBuilder builder = new CommandClientBuilder();
         builder.forceGuildOnly(guildId);
         builder.setOwnerId(ownerId);
@@ -63,22 +71,27 @@ public class Bot {
                     break;
             }
         }
+        /*end of bot initialization*/
+
         /*start of commands*/
         /*end of commands*/
         CommandClient client = builder.build();
-        jdab.enableIntents(GatewayIntent.GUILD_MEMBERS);
+        jdaB.enableIntents(GatewayIntent.GUILD_MEMBERS);
         try{
-            jda = jdab.build();
+            jda = jdaB.build();
         }catch (LoginException e){
             System.out.println("[ERROR] Wrong bot token!");
             System.out.println("[ERROR] Exiting app :(");
             System.exit(1);
         }
-        jda.addEventListener(client);
+        jda.addEventListener(client, new Advertise());
         try{
             getJda().awaitReady();
         }catch (InterruptedException e){
             e.printStackTrace();
+        }
+        if(editCfg){
+            System.out.println("[Raveolution] Please make sure to edit config.yml with your info!");
         }
 
     }
@@ -89,6 +102,12 @@ public class Bot {
 
     public Config getConf() {
         return conf;
+    }
+    public Database getDatabase(){
+        return db;
+    }
+    public SQLConnection getSql(){
+        return sql;
     }
 
     public void setToken(String token){
@@ -102,5 +121,8 @@ public class Bot {
     }
     public JDA getJda(){
         return jda;
+    }
+    public void setEditCfg(boolean b){
+        this.editCfg = b;
     }
 }

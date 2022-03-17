@@ -7,3 +7,15 @@ BotStatus:
   enableActivity: true
   activity: 'PLAYING' #Avaiable activities: PLAYING, WATCHING, LISTENING, STREAMING
   activityName: 'Raveolution'
+Logs:
+  logsChannelId: "934518991328784424"
+XPSystem:
+  enabled: true
+  delay: '5m'  #Delay between xp gain, (s, m, h, d)
+  xpForLvLUp: '15'  #User will gain 0.5 xp per message if not on cool down (delay). Default required xp for lvl up is 15
+  lvlUpMsg: true  #If set to false, bot will not respond if someone levelup
+  lvlUpMsgStr: 'Well played %user%, you just advanced to level %level%'
+Advertising:
+  allow: false #if set to false, this will block all discord invite links that are not pointing to your server
+  dmAdvertiser: true #if set to true, it will send dm to user who tried to advertise, if false it will send message in channel
+  message: 'Hey, %user%, advertising is not allowed here!'
