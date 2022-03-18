@@ -12,7 +12,6 @@ Logs:
 XPSystem:
   enabled: true
   delay: '5m'  #Delay between xp gain, (s, m, h, d)
-  xpForLvLUp: '15'  #User will gain 0.5 xp per message if not on cool down (delay). Default required xp for lvl up is 15
   lvlUpMsg: true  #If set to false, bot will not respond if someone levelup
   lvlUpMsgStr: 'Well played %user%, you just advanced to level %level%'
 Advertising:
