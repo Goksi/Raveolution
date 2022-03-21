@@ -17,7 +17,7 @@ public class LevelUtils {
 
         return totalXp - xp + xpToNextLevel(lvl);
     }
-    public static int xpToLevels(long totalXp) {
+    public static int xpToLevels(long totalXp) { //working !!!
         boolean rac = true;
         int level = 0;
 
@@ -33,7 +33,7 @@ public class LevelUtils {
 
         return level;
     }
-    private static long levelsToXp(int levels) {
+    public static long levelsToXp(int levels) {
         long xp = 0;
 
         for (int level = 0; level <= levels; level++) {
@@ -45,5 +45,6 @@ public class LevelUtils {
     public static long xpToNextLevel(int level) {
         return 5 * (((long) Math.pow(level, 2)) + 10L * level);
     }
+
 
 }

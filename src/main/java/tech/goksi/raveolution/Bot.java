@@ -6,14 +6,21 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import tech.goksi.raveolution.events.Advertise;
+import tech.goksi.raveolution.events.InvitesHandler;
+import tech.goksi.raveolution.events.XPHandler;
 import tech.goksi.raveolution.sql.Database;
 import tech.goksi.raveolution.sql.SQLConnection;
-import tech.goksi.raveolution.utils.Config;
+import tech.goksi.raveolution.config.Config;
 import tech.goksi.raveolution.utils.ConfigUtils;
+import tech.goksi.raveolution.utils.LevelBar;
+import tech.goksi.raveolution.utils.LevelUtils;
 
 import javax.security.auth.login.LoginException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Bot {
     private String token;
@@ -25,6 +32,7 @@ public class Bot {
     private JDA jda;
     private Database db;
     private boolean editCfg = false;
+    private Map<String, Integer> invitesUsage;
     public Bot(){
         this.conf = new Config();
         instance = this;
@@ -37,6 +45,7 @@ public class Bot {
         sql.connect();
         db = new Database();
         db.createTable();
+        invitesUsage = new HashMap<>();
         /*start of bot initialization*/
         JDABuilder jdaB = JDABuilder.createDefault(token);
         CommandClientBuilder builder = new CommandClientBuilder();
@@ -84,18 +93,19 @@ public class Bot {
             System.out.println("[ERROR] Exiting app :(");
             System.exit(1);
         }
-        jda.addEventListener(client, new Advertise());
+        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler());
         try{
             getJda().awaitReady();
         }catch (InterruptedException e){
             e.printStackTrace();
         }
+        addInvitesToMap();
         if(editCfg){
             System.out.println("[Raveolution] Please make sure to edit config.yml with your info!");
         }
 
     }
-
+    /*getters and setters*/
     public static Bot getInstance(){
         return instance;
     }
@@ -125,4 +135,18 @@ public class Bot {
     public void setEditCfg(boolean b){
         this.editCfg = b;
     }
+    public Map<String, Integer> getInvitesUsage(){
+        return invitesUsage;
+    }
+    /*end of getters and setters*/
+    private void addInvitesToMap(){
+        Map<String, Integer> temp = new HashMap<>();
+        if(getJda().getGuilds().get(0).retrieveInvites().complete().isEmpty()) return;
+        for(Invite i : getJda().getGuilds().get(0).retrieveInvites().complete()){
+            temp.put(i.getCode(), i.getUses());
+        }
+        invitesUsage = temp;
+    }
+
+
 }
