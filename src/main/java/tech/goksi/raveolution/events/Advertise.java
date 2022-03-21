@@ -25,6 +25,7 @@ public class Advertise extends ListenerAdapter {
                     Invite.resolve(event.getJDA(), inv).queue(invite -> {
                         if(invite.getGuild() == null) return;
                         if(!invite.getGuild().getId().equals(event.getGuild().getId())){
+                            System.out.println("[Raveolution] User " + event.getAuthor().getAsTag() + " just tried to advertise !");
                             String message = event.getMessage().getContentRaw();
                             event.getMessage().delete().queue();
                             if(ConfigUtils.getBoolean("Advertising.dmAdvertiser")){
