@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import tech.goksi.raveolution.commands.Clear;
+import tech.goksi.raveolution.commands.Leaderboards;
+import tech.goksi.raveolution.commands.Level;
 import tech.goksi.raveolution.events.Advertise;
 import tech.goksi.raveolution.events.InvitesHandler;
 import tech.goksi.raveolution.events.XPHandler;
@@ -83,6 +86,9 @@ public class Bot {
         /*end of bot initialization*/
 
         /*start of commands*/
+        builder.addSlashCommand(new Leaderboards());
+        builder.addSlashCommand(new Level());
+        builder.addSlashCommand(new Clear());
         /*end of commands*/
         CommandClient client = builder.build();
         jdaB.enableIntents(GatewayIntent.GUILD_MEMBERS);
@@ -100,9 +106,12 @@ public class Bot {
             e.printStackTrace();
         }
         addInvitesToMap();
+        getDatabase().fixInvites();
         if(editCfg){
             System.out.println("[Raveolution] Please make sure to edit config.yml with your info!");
         }
+        System.out.println("[Raveolution] Bot started successfully");
+
 
     }
     /*getters and setters*/
