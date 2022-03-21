@@ -11,18 +11,20 @@ import tech.goksi.raveolution.utils.MillisConvert;
 
 import java.util.*;
 
-public class PointsHandler extends ListenerAdapter {
+public class XPHandler extends ListenerAdapter {
     private final List<User> onCoolDown = new ArrayList<>();
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if(!ConfigUtils.getBoolean("XPSystem.enabled")) return;
+        if(event.getAuthor().isBot()) return; //why this isn't default >.<
         if(!onCoolDown.contains(event.getAuthor())){
             long randomXP = LevelUtils.randomXP(10, 25);
             Bot.getInstance().getDatabase().addXP(event.getAuthor(), randomXP);
             int xpToLvl = LevelUtils.xpToLevels(Bot.getInstance().getDatabase().getXP(event.getAuthor()));
             if(xpToLvl > Bot.getInstance().getDatabase().getLvl(event.getAuthor())){
                 Bot.getInstance().getDatabase().addLvl(event.getAuthor(), xpToLvl);
+                System.out.println("[Raveolution] User " + event.getAuthor().getAsTag() + " has been levelup to level " + xpToLvl);
                 if(ConfigUtils.getBoolean("XPSystem.lvlUpMsg")){
                     event.getChannel().sendMessage(ConfigUtils.getString("XPSystem.lvlUpMsgStr", "%user%", event.getAuthor().getAsMention()).
                             replaceAll("%level%", String.valueOf(Bot.getInstance().getDatabase().getLvl(event.getAuthor())))).queue();

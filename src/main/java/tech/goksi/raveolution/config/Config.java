@@ -1,4 +1,4 @@
-package tech.goksi.raveolution.utils;
+package tech.goksi.raveolution.config;
 
 import org.bspfsystems.yamlconfiguration.file.FileConfiguration;
 import org.bspfsystems.yamlconfiguration.file.YamlConfiguration;
