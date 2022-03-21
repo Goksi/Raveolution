@@ -1,5 +1,6 @@
 package tech.goksi.raveolution.sql;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import tech.goksi.raveolution.Bot;
 
@@ -7,13 +8,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class Database {
 
     public void createTable(){
         try{
             PreparedStatement ps1 = Bot.getInstance().getSql().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS invites "
-            + "(ID BIGINT, TOTAL INTEGER, FAKE INTEGER, 'LEFT' INTEGER, InvitedBy BIGINT, PRIMARY KEY (ID))");
+            + "(ID BIGINT, TOTAL INTEGER DEFAULT 0, FAKE INTEGER DEFAULT 0, 'LEFT' INTEGER DEFAULT 0, InvitedBy BIGINT, PRIMARY KEY (ID))");
             PreparedStatement ps2 = Bot.getInstance().getSql().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS points "
             + "(ID BIGINT,XP BIGINT DEFAULT 0, LEVEL INTEGER DEFAULT  0,  PRIMARY KEY (ID))");
             ps1.executeUpdate();
@@ -25,10 +27,13 @@ public class Database {
 
     public void addLvl(User u, int lvl){
         try{
-            PreparedStatement ps = Bot.getInstance().getSql().getConnection().prepareStatement("UPDATE points SET LEVEL=? WHERE ID=?");
-            ps.setInt(1, lvl);
-            ps.setLong(2, u.getIdLong());
-            ps.executeUpdate();
+            PreparedStatement ps2 = Bot.getInstance().getSql().getConnection().prepareStatement("INSERT OR IGNORE INTO points (ID) VALUES (?) ");
+            PreparedStatement ps1 = Bot.getInstance().getSql().getConnection().prepareStatement("UPDATE points SET LEVEL=? WHERE ID=?");
+            ps1.setInt(1, lvl);
+            ps2.setLong(1, u.getIdLong());
+            ps1.setLong(2, u.getIdLong());
+            ps2.executeUpdate();
+            ps1.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -52,9 +57,12 @@ public class Database {
     public void addXP(User u, long xp){
         float currentXP = getXP(u);
         try{
-            PreparedStatement ps = Bot.getInstance().getSql().getConnection().prepareStatement("INSERT OR REPLACE INTO points (ID, XP) VALUES (?, ?)");
-            ps.setLong(1, u.getIdLong());
-            ps.setFloat(2, currentXP + xp);
+            PreparedStatement ps2 = Bot.getInstance().getSql().getConnection().prepareStatement("INSERT OR IGNORE INTO points (ID) VALUES (?)");
+            PreparedStatement ps = Bot.getInstance().getSql().getConnection().prepareStatement("UPDATE points SET XP=? WHERE ID=?");
+            ps.setLong(2, u.getIdLong());
+            ps2.setLong(1, u.getIdLong());
+            ps.setFloat(1, currentXP + xp);
+            ps2.executeUpdate();
             ps.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -78,8 +86,8 @@ public class Database {
 
     public void invitesAdd(User user, User invitedBy){
         try{
-            PreparedStatement ps = Bot.getInstance().getSql().getConnection().prepareStatement("INSERT INTO invites"
-                    + "(ID, TOTAL, FAKE, 'LEFT') VALUES (?,0,0,0)");
+            PreparedStatement ps = Bot.getInstance().getSql().getConnection().prepareStatement("INSERT OR IGNORE INTO invites"
+                    + "(ID) VALUES (?)");
             PreparedStatement ps1 = Bot.getInstance().getSql().getConnection().prepareStatement("UPDATE invites SET InvitedBy=? WHERE ID=?");
             PreparedStatement ps2 = Bot.getInstance().getSql().getConnection().prepareStatement("UPDATE invites SET TOTAL=? WHERE ID=?");
             ps.setLong(1, user.getIdLong());
@@ -179,6 +187,19 @@ public class Database {
             e.printStackTrace();
         }
         return temp;
+    }
+
+    public void fixInvites(){
+        List<Member> members = Bot.getInstance().getJda().getGuilds().get(0).loadMembers().get();
+        for(Member m : members){
+            try{
+                PreparedStatement ps = Bot.getInstance().getSql().getConnection().prepareStatement("INSERT OR IGNORE INTO invites (ID, InvitedBy) VALUES (?, NULL)");
+                ps.setLong(1, m.getIdLong());
+                ps.executeUpdate();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
     }
 
 }

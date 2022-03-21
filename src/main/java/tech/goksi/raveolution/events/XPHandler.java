@@ -19,7 +19,7 @@ public class XPHandler extends ListenerAdapter {
         if(!ConfigUtils.getBoolean("XPSystem.enabled")) return;
         if(event.getAuthor().isBot()) return; //why this isn't default >.<
         if(!onCoolDown.contains(event.getAuthor())){
-            long randomXP = LevelUtils.randomXP(10, 25);
+            long randomXP = LevelUtils.randomXp(10, 25);
             Bot.getInstance().getDatabase().addXP(event.getAuthor(), randomXP);
             int xpToLvl = LevelUtils.xpToLevels(Bot.getInstance().getDatabase().getXP(event.getAuthor()));
             if(xpToLvl > Bot.getInstance().getDatabase().getLvl(event.getAuthor())){
@@ -47,6 +47,8 @@ public class XPHandler extends ListenerAdapter {
                     onCoolDown.remove(event.getAuthor());
                 }
             }, due);
+
+
         }
     }
 }
