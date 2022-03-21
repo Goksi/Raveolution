@@ -8,7 +8,7 @@ BotStatus:
   activity: 'PLAYING' #Avaiable activities: PLAYING, WATCHING, LISTENING, STREAMING
   activityName: 'Raveolution'
 Logs:
-  logsChannelId: "934518991328784424"
+  logsChannelId: '934518991328784424'
 XPSystem:
   enabled: true
   delay: '5m'  #Delay between xp gain, (s, m, h, d)
@@ -18,3 +18,11 @@ Advertising:
   allow: false #if set to false, this will block all discord invite links that are not pointing to your server
   dmAdvertiser: true #if set to true, it will send dm to user who tried to advertise, if false it will send message in channel
   message: 'Hey, %user%, advertising is not allowed here!'
+Embeds:
+  leaderboards:
+    title: 'Raveolution ranking'
+    thumbnailUrl: "https://cdn.discordapp.com/avatars/913832514005643314/df612a912243f84fcce186ff1d3fbf2f.png" #you can leave this empty for no thumbnail
+Clear:
+  messageSuccess: 'Successfully removed %number% messages :thumbsup:' #%number% is a placeholder
+  allowedRanks:
+    - '943129068499509358' #you can add more by just adding to list
