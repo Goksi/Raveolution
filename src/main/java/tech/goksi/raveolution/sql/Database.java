@@ -144,7 +144,7 @@ public class Database {
             ps.setLong(1, u.getIdLong());
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                return rs.getInt("LEFT");
+                return rs.getInt("'LEFT'");
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -188,17 +188,38 @@ public class Database {
         }
         return temp;
     }
+    public LinkedHashMap<String, String> getInvitesLeaderboards(){
+        LinkedHashMap<String, String> temp = new LinkedHashMap<>();
+        try{
+            PreparedStatement ps = Bot.getInstance().getSql().getConnection().
+                    prepareStatement("SELECT ID,TOTAL,FAKE,'LEFT', TOTAL - invites.FAKE - invites.LEFT AS final FROM invites ORDER BY final DESC LIMIT 10");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                User u = Bot.getInstance().getJda().retrieveUserById(rs.getLong("ID")).complete();
+                int finalN = rs.getInt("TOTAL") - rs.getInt("FAKE") - rs.getInt("'LEFT'");
+                if(finalN != 0){
+                    temp.put(u.getAsTag(), String.valueOf(finalN));
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return temp;
+    }
 
     public void fixInvites(){
         List<Member> members = Bot.getInstance().getJda().getGuilds().get(0).loadMembers().get();
         for(Member m : members){
-            try{
-                PreparedStatement ps = Bot.getInstance().getSql().getConnection().prepareStatement("INSERT OR IGNORE INTO invites (ID, InvitedBy) VALUES (?, NULL)");
-                ps.setLong(1, m.getIdLong());
-                ps.executeUpdate();
-            }catch (SQLException e){
-                e.printStackTrace();
+            if(!m.getUser().isBot()){
+                try{
+                    PreparedStatement ps = Bot.getInstance().getSql().getConnection().prepareStatement("INSERT OR IGNORE INTO invites (ID, InvitedBy) VALUES (?, NULL)");
+                    ps.setLong(1, m.getIdLong());
+                    ps.executeUpdate();
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
             }
+
         }
     }
 

@@ -3,9 +3,9 @@ BotInfo:
   ownerId: 'Put your discord id here'
   guildId: 'Put your server id here'
 BotStatus:
-  status: 'DND' #Avaiable statuses: DND, ONLINE, IDLE, INVISIBLE
+  status: 'DND' #Available statuses: DND, ONLINE, IDLE, INVISIBLE
   enableActivity: true
-  activity: 'PLAYING' #Avaiable activities: PLAYING, WATCHING, LISTENING, STREAMING
+  activity: 'PLAYING' #Available activities: PLAYING, WATCHING, LISTENING, STREAMING
   activityName: 'Raveolution'
 Logs:
   logsChannelId: '934518991328784424'
@@ -20,9 +20,21 @@ Advertising:
   message: 'Hey, %user%, advertising is not allowed here!'
 Embeds:
   leaderboards:
-    title: 'Raveolution ranking'
+    titleLevel: 'Raveolution level ranking'
+    titleInvites: 'Raveolution invites ranking'
     thumbnailUrl: "https://cdn.discordapp.com/avatars/913832514005643314/df612a912243f84fcce186ff1d3fbf2f.png" #you can leave this empty for no thumbnail
+  invites:
+    title: "Raveolution invites"
+  cat:
+    title: "Random image of cat :hugging:"
+    desc: "Enjoy :)"
 Clear:
   messageSuccess: 'Successfully removed %number% messages :thumbsup:' #%number% is a placeholder
   allowedRanks:
     - '943129068499509358' #you can add more by just adding to list
+Giveaway:
+  title: 'Raveolution giveaway!'
+  noWinner: 'This giveaway ends with no winner :('
+  winner: 'Congratulations %winner% for winning this giveaway, giveaway author will send you dm soon!'
+  allowedRanks:
+    - '943129068499509358'

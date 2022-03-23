@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goksi.raveolution.Bot;
+import tech.goksi.raveolution.exceptions.FailFormatException;
 import tech.goksi.raveolution.utils.ConfigUtils;
 import tech.goksi.raveolution.utils.LevelUtils;
 import tech.goksi.raveolution.utils.MillisConvert;
@@ -36,7 +37,7 @@ public class XPHandler extends ListenerAdapter {
             long cd;
             try{
                 cd = MillisConvert.toMilli(ConfigUtils.getString("XPSystem.delay"));
-            }catch (NumberFormatException e){
+            }catch (FailFormatException e){
                 e.printStackTrace();
                 return;
             }

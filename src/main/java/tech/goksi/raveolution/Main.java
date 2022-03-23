@@ -1,8 +1,7 @@
 package tech.goksi.raveolution;
 
 import tech.goksi.raveolution.utils.ConfigUtils;
-import tech.goksi.raveolution.utils.LevelBar;
-import tech.goksi.raveolution.utils.LevelUtils;
+
 
 import java.util.Scanner;
 

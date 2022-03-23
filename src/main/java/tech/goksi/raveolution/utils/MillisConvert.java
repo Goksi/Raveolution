@@ -1,7 +1,9 @@
 package tech.goksi.raveolution.utils;
 
+import tech.goksi.raveolution.exceptions.FailFormatException;
+
 public class MillisConvert {
-    public static long toMilli(String s){
+    public static long toMilli(String s) throws FailFormatException {
         long result = 0;
         String number = "";
         for (int i = 0; i < s.length(); i++) {
@@ -11,9 +13,9 @@ public class MillisConvert {
             } else if (Character.isLetter(c) && !number.isEmpty()) {
                 result += convert(Integer.parseInt(number), c);
                 number = "";
-            }else throw new NumberFormatException();
+            }else throw new FailFormatException("Failed to format string");
         }
-        if(result == 0) throw new NumberFormatException();
+        if(result == 0) throw new FailFormatException("Failed to format string");
         return result;
     }
     private static long convert(int value, char unit) {

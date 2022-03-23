@@ -2,6 +2,7 @@ package tech.goksi.raveolution.utils;
 
 import tech.goksi.raveolution.Bot;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ConfigUtils {
@@ -21,4 +22,9 @@ public class ConfigUtils {
     public static void set(String path, Object value){
         Bot.getInstance().getConf().getValues().set(path, value);
     }
+
+    public static List<String> getStringList(String path){
+        return Bot.getInstance().getConf().getValues().getStringList(path);
+    }
+
 }
