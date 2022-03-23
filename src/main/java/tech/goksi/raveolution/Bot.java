@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import tech.goksi.raveolution.commands.*;
 import tech.goksi.raveolution.events.Advertise;
 import tech.goksi.raveolution.events.InvitesHandler;
+import tech.goksi.raveolution.events.ShutdownHandler;
 import tech.goksi.raveolution.events.XPHandler;
 import tech.goksi.raveolution.sql.Database;
 import tech.goksi.raveolution.sql.SQLConnection;
@@ -33,6 +34,10 @@ public class Bot {
     private Database db;
     private boolean editCfg = false;
     private Map<String, Integer> invitesUsage;
+
+
+
+    private Map<Long, Long> tickets;
     public Bot(){
         this.conf = new Config();
         instance = this;
@@ -46,6 +51,7 @@ public class Bot {
         db = new Database();
         db.createTable();
         invitesUsage = new HashMap<>();
+        tickets = new HashMap<>();
         /*start of bot initialization*/
         JDABuilder jdaB = JDABuilder.createDefault(token);
         CommandClientBuilder builder = new CommandClientBuilder();
@@ -100,7 +106,7 @@ public class Bot {
             System.out.println("[ERROR] Exiting app :(");
             System.exit(1);
         }
-        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler());
+        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler(), new ShutdownHandler());
         try{
             getJda().awaitReady();
         }catch (InterruptedException e){
@@ -119,7 +125,9 @@ public class Bot {
     public static Bot getInstance(){
         return instance;
     }
-
+    public Map<Long, Long> getTickets() {
+        return tickets;
+    }
     public Config getConf() {
         return conf;
     }

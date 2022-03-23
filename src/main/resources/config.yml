@@ -38,3 +38,8 @@ Giveaway:
   winner: 'Congratulations %winner% for winning this giveaway, giveaway author will send you dm soon!'
   allowedRanks:
     - '943129068499509358'
+Tickets:
+  ticketName: "ticket #%id%" #%id% is placeholder, all ticket channels will use this format
+  ticketsCategoryId: 'Put your category id' #this is category id where ticket channels will be created
+  supportRoles:
+    - '934804969612279838' #these roles will be added to ticket as a support
