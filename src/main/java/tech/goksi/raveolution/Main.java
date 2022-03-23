@@ -1,5 +1,7 @@
 package tech.goksi.raveolution;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tech.goksi.raveolution.utils.ConfigUtils;
 
 
@@ -8,6 +10,7 @@ import java.util.Scanner;
 public class Main {
     @SuppressWarnings("ConstantConditions")
     public static void main(String[] args) {
+        Logger logger = LoggerFactory.getLogger(Main.class);
         Bot bot = new Bot();
         String token = ConfigUtils.getString("BotInfo.token");
         String ownerId = ConfigUtils.getString("BotInfo.ownerId");
@@ -27,7 +30,7 @@ public class Main {
             ConfigUtils.set("BotInfo.guildId", guildId);
             bot.setEditCfg(true);
         }
-        System.out.println("[Raveolution] Everything looks fine, starting websocket..");
+        logger.info("Everything looks fine, starting websocket..");
         bot.setGuildId(guildId);
         bot.setOwnerId(ownerId);
         bot.setToken(token);

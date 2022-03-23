@@ -1,5 +1,6 @@
 package tech.goksi.raveolution;
 
+
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import net.dv8tion.jda.api.JDA;
@@ -8,11 +9,10 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tech.goksi.raveolution.commands.*;
-import tech.goksi.raveolution.events.Advertise;
-import tech.goksi.raveolution.events.InvitesHandler;
-import tech.goksi.raveolution.events.ShutdownHandler;
-import tech.goksi.raveolution.events.XPHandler;
+import tech.goksi.raveolution.events.*;
 import tech.goksi.raveolution.sql.Database;
 import tech.goksi.raveolution.sql.SQLConnection;
 import tech.goksi.raveolution.config.Config;
@@ -34,6 +34,7 @@ public class Bot {
     private Database db;
     private boolean editCfg = false;
     private Map<String, Integer> invitesUsage;
+    private final Logger logger;
 
 
 
@@ -42,6 +43,7 @@ public class Bot {
         this.conf = new Config();
         instance = this;
         conf.saveDefaultConfig();
+        this.logger = LoggerFactory.getLogger(Bot.class);
     }
 
 
@@ -96,28 +98,30 @@ public class Bot {
         builder.addSlashCommand(new Cat());
         builder.addSlashCommand(new CoronaApi());
         builder.addSlashCommand(new Giveaway());
+        builder.addSlashCommand(new SetupTicket());
+        builder.addSlashCommand(new Avatar());
         /*end of commands*/
         CommandClient client = builder.build();
         jdaB.enableIntents(GatewayIntent.GUILD_MEMBERS);
         try{
             jda = jdaB.build();
         }catch (LoginException e){
-            System.out.println("[ERROR] Wrong bot token!");
-            System.out.println("[ERROR] Exiting app :(");
+            logger.error("Wrong bot token!");
+            logger.info("Exiting app :(");
             System.exit(1);
         }
-        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler(), new ShutdownHandler());
+        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler(), new ShutdownHandler(), new TicketHandler());
         try{
             getJda().awaitReady();
         }catch (InterruptedException e){
             e.printStackTrace();
         }
         addInvitesToMap();
-        //getDatabase().fixInvites();
+        getDatabase().fixInvites();
         if(editCfg){
-            System.out.println("[Raveolution] Please make sure to edit config.yml with your info!");
+            logger.info("Please make sure to edit config.yml with your info!");
         }
-        System.out.println("[Raveolution] Bot started successfully");
+        logger.info("Bot started successfully!");
 
 
     }
