@@ -57,3 +57,18 @@ Tickets:
     - '934804969612279838' #roles here will be able to use /setupTicket cmd
   supportRoles:
     - '934804969612279838' #these roles will be added to ticket as a support
+Mute:
+  message: "%user% is successfully muted for %time%"
+  messagePermanent: "%user% is permanently muted!"
+  unmuteDm: true #if this is set to true, bot will send dm to user after he is being unmuted
+  unmuteDmMessage: "You are unmuted in our server, try to not get muted again!"
+  muteRole: "Put your mute role id here" #should be role without permission to write in any channel
+  allowedRanks:
+    - "943129068499509358"
+SetupPrivate:
+  categoryName: "Private"                        #Category name and channel name are irrelevant, they are just used for
+  channelName: "Join to create private channel"  #first /setupPrivate command
+  categoryId: "Put your category id here"        #Put values here that are given after
+  channelId: "Put you channel id here"           #you typed /setupPrivate
+  allowedRanks:
+    - "943129068499509358"

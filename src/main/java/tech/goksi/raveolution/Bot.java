@@ -100,6 +100,8 @@ public class Bot {
         builder.addSlashCommand(new Giveaway());
         builder.addSlashCommand(new SetupTicket());
         builder.addSlashCommand(new Avatar());
+        builder.addSlashCommand(new Mute());
+        builder.addSlashCommand(new SetupPrivate());
         /*end of commands*/
         CommandClient client = builder.build();
         jdaB.enableIntents(GatewayIntent.GUILD_MEMBERS);
