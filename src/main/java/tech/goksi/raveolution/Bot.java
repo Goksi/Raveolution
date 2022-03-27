@@ -34,6 +34,7 @@ public class Bot {
     private Database db;
     private boolean editCfg = false;
     private Map<String, Integer> invitesUsage;
+    private Map<Long, Long> privateChannels;
     private final Logger logger;
 
 
@@ -54,6 +55,7 @@ public class Bot {
         db.createTable();
         invitesUsage = new HashMap<>();
         tickets = new HashMap<>();
+        privateChannels = new HashMap<>();
         /*start of bot initialization*/
         JDABuilder jdaB = JDABuilder.createDefault(token);
         CommandClientBuilder builder = new CommandClientBuilder();
@@ -102,6 +104,7 @@ public class Bot {
         builder.addSlashCommand(new Avatar());
         builder.addSlashCommand(new Mute());
         builder.addSlashCommand(new SetupPrivate());
+        builder.addSlashCommand(new Private());
         /*end of commands*/
         CommandClient client = builder.build();
         jdaB.enableIntents(GatewayIntent.GUILD_MEMBERS);
@@ -112,14 +115,14 @@ public class Bot {
             logger.info("Exiting app :(");
             System.exit(1);
         }
-        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler(), new ShutdownHandler(), new TicketHandler());
+        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler(), new ShutdownHandler(), new TicketHandler(), new PrivateHandler());
         try{
             getJda().awaitReady();
         }catch (InterruptedException e){
             e.printStackTrace();
         }
         addInvitesToMap();
-        getDatabase().fixInvites();
+       // getDatabase().fixInvites();
         if(editCfg){
             logger.info("Please make sure to edit config.yml with your info!");
         }
@@ -161,6 +164,9 @@ public class Bot {
     }
     public Map<String, Integer> getInvitesUsage(){
         return invitesUsage;
+    }
+    public Map<Long, Long> getPrivateChannels(){
+        return privateChannels;
     }
     /*end of getters and setters*/
     private void addInvitesToMap(){
