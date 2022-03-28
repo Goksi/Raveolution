@@ -22,6 +22,7 @@ public class SetupPrivate extends SlashCommand {
     }
     @Override
     protected void execute(SlashCommandEvent event) {
+        /*should add check if channel and cat already exist*/
         String channelId, categoryId;
         net.dv8tion.jda.api.entities.Category cat = Objects.requireNonNull(event.getGuild()).createCategory(ConfigUtils.getString("SetupPrivate.categoryName")).complete();
         Channel channel = cat.createVoiceChannel(ConfigUtils.getString("SetupPrivate.channelName")).complete();
@@ -33,6 +34,7 @@ public class SetupPrivate extends SlashCommand {
                 + "` for categoryId in your config.yml");
         ConfigUtils.set("SetupPrivate.categoryId", categoryId);
         ConfigUtils.set("SetupPrivate.channelId", channelId);
+
         event.replyEmbeds(eb.build()).setEphemeral(true).queue();
     }
 }

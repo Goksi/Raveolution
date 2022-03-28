@@ -55,7 +55,7 @@ public class PrivateHandler extends ListenerAdapter {
                 c.getGuild().moveVoiceMember(m, priv).queue();
                 return;
             }
-            Category privCat = c.getJDA().getCategoryById(ConfigUtils.getString("SetupPrivate.channelId"));
+            Category privCat = c.getJDA().getCategoryById(ConfigUtils.getString("SetupPrivate.categoryId"));
             assert privCat != null;
             VoiceChannel privChan = privCat.createVoiceChannel(m.getEffectiveName() + "'s private").complete();
             privChan.createPermissionOverride(m).setAllow(
