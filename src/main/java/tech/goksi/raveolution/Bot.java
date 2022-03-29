@@ -22,6 +22,8 @@ import tech.goksi.raveolution.utils.ConfigUtils;
 import javax.security.auth.login.LoginException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class Bot {
     private String token;
@@ -115,7 +117,7 @@ public class Bot {
             logger.info("Exiting app :(");
             System.exit(1);
         }
-        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler(), new ShutdownHandler(), new TicketHandler(), new PrivateHandler());
+        jda.addEventListener(client, new Advertise(), new XPHandler(), new InvitesHandler(), new TicketHandler(), new PrivateHandler());
         try{
             getJda().awaitReady();
         }catch (InterruptedException e){
@@ -127,6 +129,19 @@ public class Bot {
             logger.info("Please make sure to edit config.yml with your info!");
         }
         logger.info("Bot started successfully!");
+        boolean waitCom = true;
+        String comm;
+        while(waitCom){
+            Scanner sc = new Scanner(System.in);
+            comm = sc.nextLine();
+            if(comm.equalsIgnoreCase("stop")){
+                stop(); //best method I figured out as shutdown event isn't fired when ctrl+c
+                waitCom = false;
+            }else {
+                logger.warn("Wrong command, if you want to stop the bot type \"stop\"");
+            }
+        }
+
 
 
     }
@@ -176,6 +191,18 @@ public class Bot {
             temp.put(i.getCode(), i.getUses());
         }
         invitesUsage = temp;
+    }
+
+    private void stop(){
+        logger.info("Starting shutdown process");
+        getSql().disconnect();
+        if(!getTickets().isEmpty()){
+            for(Map.Entry<Long, Long> e : getTickets().entrySet()){
+                Objects.requireNonNull(getJda().getTextChannelById(e.getValue())).delete().queue();
+            }
+        }
+        getJda().shutdown();
+        System.exit(0);
     }
 
 
