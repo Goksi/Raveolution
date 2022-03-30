@@ -107,6 +107,7 @@ public class Bot {
         builder.addSlashCommand(new Mute());
         builder.addSlashCommand(new SetupPrivate());
         builder.addSlashCommand(new Private());
+        builder.addSlashCommand(new Quote());
         /*end of commands*/
         CommandClient client = builder.build();
         jdaB.enableIntents(GatewayIntent.GUILD_MEMBERS);
@@ -199,6 +200,11 @@ public class Bot {
         if(!getTickets().isEmpty()){
             for(Map.Entry<Long, Long> e : getTickets().entrySet()){
                 Objects.requireNonNull(getJda().getTextChannelById(e.getValue())).delete().queue();
+            }
+        }
+        if(!getPrivateChannels().isEmpty()){
+            for(Map.Entry<Long, Long> e : getPrivateChannels().entrySet()){
+                Objects.requireNonNull(getJda().getVoiceChannelById(e.getValue())).delete().queue();
             }
         }
         getJda().shutdown();
