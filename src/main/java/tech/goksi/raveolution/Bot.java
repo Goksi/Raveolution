@@ -108,6 +108,7 @@ public class Bot {
         builder.addSlashCommand(new SetupPrivate());
         builder.addSlashCommand(new Private());
         builder.addSlashCommand(new Quote());
+        builder.addSlashCommand(new Meme());
         /*end of commands*/
         CommandClient client = builder.build();
         jdaB.enableIntents(GatewayIntent.GUILD_MEMBERS);
@@ -125,15 +126,15 @@ public class Bot {
             e.printStackTrace();
         }
         addInvitesToMap();
-       // getDatabase().fixInvites();
+        getDatabase().fixInvites();
         if(editCfg){
             logger.info("Please make sure to edit config.yml with your info!");
         }
         logger.info("Bot started successfully!");
         boolean waitCom = true;
         String comm;
+        Scanner sc = new Scanner(System.in);
         while(waitCom){
-            Scanner sc = new Scanner(System.in);
             comm = sc.nextLine();
             if(comm.equalsIgnoreCase("stop")){
                 stop(); //best method I figured out as shutdown event isn't fired when ctrl+c
