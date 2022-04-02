@@ -39,7 +39,7 @@ public class TicketHandler extends ListenerAdapter {
                 ticketChannel.sendMessageEmbeds(eb.build()).setActionRow(Button.of(ButtonStyle.DANGER, "ticketclose", "Close ticket", Emoji.fromUnicode("U+1F6AB"))).queue();
                 ticketChannel.sendMessage(u.getAsMention()).queue(msg -> msg.delete().queueAfter(1, TimeUnit.SECONDS));
                 for(String s : ConfigUtils.getStringList("Tickets.supportRoles")){
-                    ticketChannel.sendMessage("<@" + s + ">").queue(msg -> msg.delete().queueAfter(1, TimeUnit.SECONDS));
+                    ticketChannel.sendMessage("<@&" + s + ">").queue(msg -> msg.delete().queueAfter(1, TimeUnit.SECONDS));
                 }
                 logger.info(u.getUser().getAsTag() + " just opened ticket!");
             }catch (UserHaveTicketException e){
