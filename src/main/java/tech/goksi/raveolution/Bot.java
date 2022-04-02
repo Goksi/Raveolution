@@ -130,7 +130,7 @@ public class Bot {
         if(editCfg){
             logger.info("Please make sure to edit config.yml with your info!");
         }
-        logger.info("Bot started successfully!");
+        logger.info("Bot started successfully, please make sure to type \"stop\" instead of CTRL+C to stop the bot!");
         boolean waitCom = true;
         String comm;
         Scanner sc = new Scanner(System.in);

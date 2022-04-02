@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.entities.Invite;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tech.goksi.raveolution.utils.ConfigUtils;
 
 import javax.annotation.Nonnull;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Advertise extends ListenerAdapter {
+    private final Logger logger = LoggerFactory.getLogger(Advertise.class.getName());
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event){
         if(!ConfigUtils.getBoolean("Advertising.allow")){
@@ -25,7 +28,7 @@ public class Advertise extends ListenerAdapter {
                     Invite.resolve(event.getJDA(), inv).queue(invite -> {
                         if(invite.getGuild() == null) return;
                         if(!invite.getGuild().getId().equals(event.getGuild().getId())){
-                            System.out.println("[Raveolution] User " + event.getAuthor().getAsTag() + " just tried to advertise !");
+                            logger.info("User " + event.getAuthor().getAsTag() + " just tried to advertise !");
                             String message = event.getMessage().getContentRaw();
                             event.getMessage().delete().queue();
                             if(ConfigUtils.getBoolean("Advertising.dmAdvertiser")){
