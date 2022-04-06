@@ -4,7 +4,7 @@ Raveolution is all-in-one discord bot made in JDA api wrapper with clear interfa
   * Full ticketing system
   * Rich config file
   * Support of slash commands
-  * Usage of different api-s
+  * Usage of different api-s (Memes, quote, cats)
   * One command setup private channels
   * Customizable XPSystem
   * Invites tracker 
