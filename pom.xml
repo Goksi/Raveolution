@@ -6,7 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>Raveolution</artifactId>
-    <version>beta</version>
+    <version>v1.0.0</version>
     <packaging>jar</packaging>
 
     <properties>
