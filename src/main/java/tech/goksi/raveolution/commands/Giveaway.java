@@ -49,12 +49,10 @@ public class Giveaway extends SlashCommand {
             return;
         }
         Date due = new Date(System.currentTimeMillis() + durationLong);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        String date = sdf.format(due);
         eb.setTitle(ConfigUtils.getString("Giveaway.title"));
         eb.setColor(Color.red);
         eb.addField("Prize: ", "`" + prize + "`", false);
-        eb.addField("Giveaway active till: ", "`" + date + "`", false);
+        eb.addField("Giveaway active till: ", "<t:" + due.toInstant().getEpochSecond() + ":F>", false);
         eb.setTimestamp(new Date().toInstant());
         eb.setFooter("Giveaway hosted by " + event.getUser().getAsTag());
         event.deferReply().queue();
