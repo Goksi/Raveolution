@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.api.utils.TimeFormat;
 import tech.goksi.raveolution.exceptions.FailFormatException;
 import tech.goksi.raveolution.utils.ConfigUtils;
 import tech.goksi.raveolution.utils.MillisConvert;
@@ -52,7 +53,7 @@ public class Giveaway extends SlashCommand {
         eb.setTitle(ConfigUtils.getString("Giveaway.title"));
         eb.setColor(Color.red);
         eb.addField("Prize: ", "`" + prize + "`", false);
-        eb.addField("Giveaway active till: ", "<t:" + due.toInstant().getEpochSecond() + ":F>", false);
+        eb.addField("Giveaway active till: ", TimeFormat.DATE_TIME_LONG.format(due.toInstant().toEpochMilli()), false);
         eb.setTimestamp(new Date().toInstant());
         eb.setFooter("Giveaway hosted by " + event.getUser().getAsTag());
         event.deferReply().queue();
