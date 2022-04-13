@@ -2,3 +2,4 @@
 config.yml
 target/
 database.db
+.idea/
