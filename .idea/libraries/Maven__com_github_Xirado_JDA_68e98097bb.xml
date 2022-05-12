@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.Xirado:JDA:68e98097bb">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/Xirado/JDA/68e98097bb/JDA-68e98097bb.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/Xirado/JDA/68e98097bb/JDA-68e98097bb-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/Xirado/JDA/68e98097bb/JDA-68e98097bb-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

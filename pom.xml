@@ -6,7 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>Raveolution</artifactId>
-    <version>v1.0.0</version>
+    <version>v1.1.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -15,15 +15,15 @@
     </properties>
     <repositories>
         <repository>
-            <id>chew-m2-snapshots</id>
-            <url>https://m2.chew.pro/snapshots/</url>
+            <id>jitpack</id>
+            <url>https://jitpack.io/</url>
         </repository>
     </repositories>
     <dependencies>
         <dependency>
-            <groupId>net.dv8tion</groupId>
+            <groupId>com.github.Xirado</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.0.0-alpha.9</version>
+            <version>68e98097bb</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -41,11 +41,9 @@
             <version>2.9.0</version>
         </dependency>
         <dependency>
-            <groupId>pw.chew</groupId>
-            <artifactId>jda-chewtils</artifactId>
-            <version>2.0-SNAPSHOT</version>
-            <scope>compile</scope>
-            <type>pom</type>
+            <groupId>com.github.Chew</groupId>
+            <artifactId>JDA-Chewtils</artifactId>
+            <version>9e550fc</version>
         </dependency>
         <dependency>
             <groupId>org.bspfsystems</groupId>
