@@ -40,14 +40,10 @@ Embeds:
     footerIcon: "https://cdn.discordapp.com/avatars/913832514005643314/df612a912243f84fcce186ff1d3fbf2f.png"
 Clear:
   messageSuccess: 'Successfully removed %number% messages :thumbsup:' #%number% is a placeholder
-  allowedRanks:
-    - '943129068499509358' #you can add more by just adding to list
 Giveaway:
   title: 'Raveolution giveaway!'
   noWinner: 'This giveaway ends with no winner :('
   winner: 'Congratulations %winner% for winning this giveaway, giveaway author will send you dm soon!'
-  allowedRanks:
-    - '943129068499509358'
 Tickets:
   #The Tickets' system works by you as the owner of the server writing /setupTicket in
   #a certain channel and an embed will be sent there with a button with which the members of the server will be able to open the ticket
@@ -63,12 +59,8 @@ Mute:
   unmuteDm: true #if this is set to true, bot will send dm to user after he is being unmuted
   unmuteDmMessage: "You are unmuted in our server, try to not get muted again!"
   muteRole: "Put your mute role id here" #should be role without permission to write in any channel
-  allowedRanks:
-    - "943129068499509358"
 SetupPrivate:
   categoryName: "Private"                        #Category name and channel name are irrelevant, they are just used for
   channelName: "Join to create private channel"  #first /setupPrivate command
   categoryId: "Put your category id here"        #Put values here that are given after
   channelId: "Put you channel id here"           #you typed /setupPrivate
-  allowedRanks:
-    - "943129068499509358"
