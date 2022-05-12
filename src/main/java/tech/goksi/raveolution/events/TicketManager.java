@@ -29,7 +29,7 @@ public class TicketManager {
         TextChannel ticketChannel = ticketCategory.createTextChannel(ConfigUtils.getString("Tickets.ticketName").replaceAll("%id%", String.valueOf(id))).complete();
 
         Bot.getInstance().getTickets().put(ticketCreator.getIdLong(), ticketChannel.getIdLong());
-        ticketChannel.createPermissionOverride(ticketCreator).setAllow(
+        ticketChannel.upsertPermissionOverride(ticketCreator).setAllowed(
                 Permission.MESSAGE_SEND,
                 Permission.MESSAGE_HISTORY,
                 Permission.MESSAGE_ATTACH_FILES,
@@ -37,7 +37,7 @@ public class TicketManager {
                 Permission.MESSAGE_EXT_EMOJI,
                 Permission.VIEW_CHANNEL
         ).reason("Adding ticket creator to the channel").queue();
-        ticketChannel.createPermissionOverride(g.getSelfMember()).setAllow(
+        ticketChannel.upsertPermissionOverride(g.getSelfMember()).setAllowed(
                 Permission.MESSAGE_SEND,
                 Permission.MESSAGE_HISTORY,
                 Permission.MESSAGE_ATTACH_FILES,
@@ -48,7 +48,7 @@ public class TicketManager {
         ).reason("Adding bot to the channel").queue();
         List<String> supportRoles = ConfigUtils.getStringList("Tickets.supportRoles");
         for(String ids : supportRoles){
-            ticketChannel.createPermissionOverride(Objects.requireNonNull(jda.getRoleById(ids))).setAllow(
+            ticketChannel.upsertPermissionOverride(Objects.requireNonNull(jda.getRoleById(ids))).setAllowed(
                     Permission.MESSAGE_SEND,
                     Permission.MESSAGE_HISTORY,
                     Permission.MESSAGE_ATTACH_FILES,
@@ -58,7 +58,7 @@ public class TicketManager {
                     Permission.MESSAGE_MANAGE
             ).reason("Adding staff roles to the channel").queue();
         }
-        ticketChannel.createPermissionOverride(g.getPublicRole()).setDeny(
+        ticketChannel.upsertPermissionOverride(g.getPublicRole()).setDenied(
                 Permission.MESSAGE_SEND,
                 Permission.MESSAGE_HISTORY,
                 Permission.MESSAGE_ATTACH_FILES,
