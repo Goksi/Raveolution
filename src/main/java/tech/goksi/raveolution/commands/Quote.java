@@ -22,7 +22,6 @@ public class Quote extends SlashCommand {
     private final Logger logger;
     public Quote(){
         this.name = "quote";
-        this.defaultEnabled = true;
         this.cooldown = 30;
         this.help = "Returns random quote of given anime or anime character";
         List<OptionData> options = new ArrayList<>();

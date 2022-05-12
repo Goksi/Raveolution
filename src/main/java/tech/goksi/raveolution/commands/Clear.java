@@ -3,6 +3,7 @@ package tech.goksi.raveolution.commands;
 
 import com.jagrosh.jdautilities.command.SlashCommand;
 import com.jagrosh.jdautilities.command.SlashCommandEvent;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -18,10 +19,8 @@ public class Clear extends SlashCommand {
     public Clear(){
         this.name = "clear";
         this.cooldown = 30;
-        this.defaultEnabled = false;
         this.help = "Clears given number of messages";
-        List<String> roles = ConfigUtils.getStringList("Clear.allowedRanks");
-        this.enabledRoles = roles.toArray(new String[0]);
+        this.userPermissions = new Permission[]{Permission.ADMINISTRATOR};
         this.options = Collections.singletonList(new OptionData(OptionType.INTEGER, "messages", "Number of messages to delete").setRequired(true));
     }
     @Override

@@ -3,6 +3,7 @@ package tech.goksi.raveolution.commands;
 import com.jagrosh.jdautilities.command.SlashCommand;
 import com.jagrosh.jdautilities.command.SlashCommandEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -13,7 +14,6 @@ import tech.goksi.raveolution.utils.ConfigUtils;
 import tech.goksi.raveolution.utils.MillisConvert;
 
 import java.awt.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -22,9 +22,7 @@ public class Giveaway extends SlashCommand {
     public Giveaway(){
         this.name = "giveaway";
         this.cooldown = 30;
-        this.defaultEnabled = false;
-        List<String> roles = ConfigUtils.getStringList("Giveaway.allowedRanks");
-        this.enabledRoles = roles.toArray(new String[0]);
+        this.userPermissions = new Permission[]{Permission.ADMINISTRATOR};
         this.help = "Starts a giveaway in same channel command was sent!";
         List<OptionData> od = new ArrayList<>();
         od.add(new OptionData(OptionType.STRING, "duration", "For how long giveaway will last").setRequired(true));

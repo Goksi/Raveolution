@@ -13,7 +13,6 @@ import java.util.*;
 public class Leaderboards extends SlashCommand {
     public Leaderboards(){
         this.name = "leaderboards";
-        this.defaultEnabled = true;
         this.cooldown = 20;
         this.help = "Shows current ranking based on level";
         this.options = Collections.singletonList(new OptionData(OptionType.STRING, "type", "Select what kind of leaderboard you want to show").

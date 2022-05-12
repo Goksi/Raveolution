@@ -18,7 +18,6 @@ public class CoronaApi extends SlashCommand {
         this.name = "corona";
         this.help = "Get corona stats for given country";
         this.cooldown = 30;
-        this.defaultEnabled = true;
         this.options = Collections.singletonList(new OptionData(OptionType.STRING, "country", "Select country for stats").setRequired(true));
     }
     @Override

@@ -3,6 +3,7 @@ package tech.goksi.raveolution.commands;
 import com.jagrosh.jdautilities.command.SlashCommand;
 import com.jagrosh.jdautilities.command.SlashCommandEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
@@ -10,7 +11,6 @@ import tech.goksi.raveolution.utils.ConfigUtils;
 
 
 import java.awt.*;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SetupTicket extends SlashCommand {
@@ -18,9 +18,7 @@ public class SetupTicket extends SlashCommand {
         this.name = "setupticket";
         this.help = "Sends embed with button to open ticket in the channel";
         this.cooldown = 30;
-        this.defaultEnabled = false;
-        List<String> roles = ConfigUtils.getStringList("Tickets.rolesForSetupCmd");
-        this.enabledRoles = roles.toArray(new String[0]);
+        this.userPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
     @Override
     protected void execute(SlashCommandEvent event) {

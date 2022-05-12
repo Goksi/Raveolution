@@ -3,6 +3,7 @@ package tech.goksi.raveolution.commands;
 import com.jagrosh.jdautilities.command.SlashCommand;
 import com.jagrosh.jdautilities.command.SlashCommandEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -19,9 +20,7 @@ import java.util.List;
 public class Mute extends SlashCommand {
     public Mute(){
         this.name = "mute";
-        this.defaultEnabled = false;
-        List<String> roles = ConfigUtils.getStringList("Mute.allowedRanks");
-        this.enabledRoles = roles.toArray(new String[0]);
+        this.userPermissions = new Permission[]{Permission.ADMINISTRATOR};
         this.help = "Mutes a specific member for a given amount of time";
         List<OptionData> options = new ArrayList<>();
         options.add(new OptionData(OptionType.USER, "user", "Select a user to be muted").setRequired(true));

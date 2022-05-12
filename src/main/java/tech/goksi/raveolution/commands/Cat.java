@@ -18,7 +18,6 @@ public class Cat extends SlashCommand {
         this.name = "cat";
         this.help = "Sends back a cute image of random cat <3";
         this.cooldown = 30;
-        this.defaultEnabled = true;
     }
     @Override
     protected void execute(SlashCommandEvent event) {

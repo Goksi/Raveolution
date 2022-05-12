@@ -20,7 +20,6 @@ public class Level extends SlashCommand {
         this.name = "level";
         this.cooldown = 15;
         this.help = "Display your or other user leveling stats";
-        this.defaultEnabled = true;
         this.options = Collections.singletonList(new OptionData(OptionType.USER, "user", "Show users leveling stats"));
     }
     @Override

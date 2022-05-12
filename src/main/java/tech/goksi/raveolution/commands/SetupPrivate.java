@@ -3,12 +3,11 @@ package tech.goksi.raveolution.commands;
 import com.jagrosh.jdautilities.command.SlashCommand;
 import com.jagrosh.jdautilities.command.SlashCommandEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Category;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Channel;
 import tech.goksi.raveolution.utils.ConfigUtils;
 
 import java.awt.*;
-import java.util.List;
 import java.util.Objects;
 
 public class SetupPrivate extends SlashCommand {
@@ -16,9 +15,7 @@ public class SetupPrivate extends SlashCommand {
         this.name = "setupprivate";
         this.help = "Creating category and channel for private voice channels";
         this.cooldown = 30;
-        this.defaultEnabled = false;
-        List<String> roles = ConfigUtils.getStringList("SetupPrivate.allowedRanks");
-        this.enabledRoles = roles.toArray(new String[0]);
+        this.userPermissions = new Permission[]{Permission.ADMINISTRATOR};
     }
     @Override
     protected void execute(SlashCommandEvent event) {

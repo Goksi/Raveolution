@@ -19,7 +19,6 @@ public class Meme extends SlashCommand {
     private final Logger logger;
     public Meme(){
         this.name = "meme";
-        this.defaultEnabled = true;
         this.cooldown = 25;
         this.help = "Returns back a random reddit meme";
         this.options = Collections.singletonList(new OptionData(OptionType.STRING, "subreddit", "Select subreddit you want meme from").setRequired(false).

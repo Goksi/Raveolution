@@ -18,7 +18,6 @@ public class Invites extends SlashCommand {
         this.name = "invites";
         this.cooldown = 15;
         this.help = "Shows your or selected member invite stats";
-        this.defaultEnabled = true;
         this.options = Collections.singletonList(new OptionData(OptionType.USER, "user", "Show users invites stats"));
     }
     @Override
