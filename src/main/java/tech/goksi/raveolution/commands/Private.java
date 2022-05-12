@@ -20,7 +20,6 @@ public class Private extends SlashCommand {
     public Private(){
         this.name = "private";
         this.help = "Options for your private channel";
-        this.defaultEnabled = true;
         this.children = new SlashCommand[]{new Add(this), new Remove(this)};
     }
     @Override
@@ -44,7 +43,6 @@ class Add extends SlashCommand{
     public Add(Private priv){
         this.name = "add";
         this.help = "Adds user to your private channel";
-        this.defaultEnabled = true;
         this.cooldown = 10;
         this.options = Collections.singletonList(new OptionData(OptionType.USER, "user", "User you want to add to your private channel").setRequired(true));
         this.priv = priv;
@@ -59,7 +57,7 @@ class Add extends SlashCommand{
             VoiceChannel priv = event.getJDA().getVoiceChannelById(Bot.getInstance().getPrivateChannels().get(event.getUser().getIdLong()));
             assert priv != null;
             if(priv.getPermissionOverride(targetM) == null){
-                priv.createPermissionOverride(targetM).setAllow(
+                priv.upsertPermissionOverride(targetM).setAllowed(
                         Permission.VIEW_CHANNEL,
                         Permission.VOICE_CONNECT
                 ).reason("Adding user to the channel").queue();
@@ -84,7 +82,6 @@ class Remove extends SlashCommand{
     public Remove(Private priv){
         this.name = "remove";
         this.help = "Removes user from your private channel";
-        this.defaultEnabled = true;
         this.cooldown = 10;
         this.options = Collections.singletonList(new OptionData(OptionType.USER, "user", "User you want to remove from private channel").setRequired(true));
         this.priv = priv;
