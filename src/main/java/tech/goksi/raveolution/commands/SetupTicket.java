@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SetupTicket extends SlashCommand {
     public SetupTicket(){
+        /*TODO: dodati da mozes da stavis id ili channel*/
         this.name = "setupticket";
         this.help = "Sends embed with button to open ticket in the channel";
         this.cooldown = 30;

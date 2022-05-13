@@ -30,6 +30,7 @@ public class Main {
             ConfigUtils.set("BotInfo.guildId", guildId);
             bot.setEditCfg(true);
         }
+        Bot.getInstance().getConf().saveConfig();
         logger.info("Everything looks fine, starting websocket..");
         bot.setGuildId(guildId);
         bot.setOwnerId(ownerId);
