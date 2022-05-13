@@ -43,13 +43,12 @@
         <dependency>
             <groupId>com.github.Chew</groupId>
             <artifactId>JDA-Chewtils</artifactId>
-            <version>9e550fc</version>
+            <version>954802b</version>
         </dependency>
         <dependency>
-            <groupId>org.bspfsystems</groupId>
-            <artifactId>yamlconfiguration</artifactId>
-            <version>1.0.11</version>
-            <scope>compile</scope>
+            <groupId>me.carleslc.Simple-YAML</groupId>
+            <artifactId>Simple-Yaml</artifactId>
+            <version>1.8</version>
         </dependency>
     </dependencies>
     <build>
