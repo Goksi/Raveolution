@@ -45,7 +45,7 @@ public class Bot {
     public Bot(){
         this.conf = new Config();
         instance = this;
-        conf.saveDefaultConfig();
+        conf.initConfig();
         this.logger = LoggerFactory.getLogger(Bot.class);
     }
 
