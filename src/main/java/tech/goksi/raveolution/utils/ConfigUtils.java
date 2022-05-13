@@ -26,5 +26,4 @@ public class ConfigUtils {
     public static List<String> getStringList(String path){
         return Bot.getInstance().getConf().getValues().getStringList(path);
     }
-
 }

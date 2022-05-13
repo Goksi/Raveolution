@@ -41,8 +41,5 @@ public class Cat extends SlashCommand {
         eb.setDescription(ConfigUtils.getString("Embeds.cat.desc"));
         eb.setColor(Color.ORANGE);
         event.replyEmbeds(eb.build()).queue();
-
-
-
     }
 }
