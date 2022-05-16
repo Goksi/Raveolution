@@ -4,13 +4,19 @@ import com.jagrosh.jdautilities.command.SlashCommand;
 import com.jagrosh.jdautilities.command.SlashCommandEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
+import tech.goksi.raveolution.Bot;
 import tech.goksi.raveolution.utils.ConfigUtils;
 
 
 import java.awt.*;
+import java.util.Collections;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class SetupTicket extends SlashCommand {
@@ -20,16 +26,21 @@ public class SetupTicket extends SlashCommand {
         this.help = "Sends embed with button to open ticket in the channel";
         this.cooldown = 30;
         this.userPermissions = new Permission[]{Permission.ADMINISTRATOR};
+        this.options = Collections.singletonList(new OptionData(OptionType.STRING, "categoryId", "Your category id for ticket channels").setRequired(true));
     }
     @Override
     protected void execute(SlashCommandEvent event) {
         EmbedBuilder eb = new EmbedBuilder();
-        if(ConfigUtils.getString("Tickets.ticketsCategoryId").equals("Put your category id") || event.getJDA().getCategoryById(ConfigUtils.getString("Tickets.ticketsCategoryId")) == null){
+        String categoryId = Objects.requireNonNull(event.optString("categoryId"));
+        net.dv8tion.jda.api.entities.Category category = event.getJDA().getCategoryById(categoryId);
+        if(category == null) {
             eb.setColor(Color.RED);
-            eb.setDescription(":no_entry: Please put valid category id in config.yml file");
+            eb.setDescription(":no_entry: Invalid category id, try again!");
             event.replyEmbeds(eb.build()).setEphemeral(true).queue();
             return;
         }
+        Bot.getInstance().getConf().getValues().set("Tickets.ticketsCategoryId", category);
+        Bot.getInstance().getConf().saveConfig();
         event.reply("fck discord").queue(msg -> msg.deleteOriginal().queueAfter(1, TimeUnit.MILLISECONDS)); //literally know no better way to acknowledge this interaction >.<
         eb.setTitle(ConfigUtils.getString("Embeds.ticket.title"));
         eb.setColor(Color.RED);
