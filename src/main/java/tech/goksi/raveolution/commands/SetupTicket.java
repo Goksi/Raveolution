@@ -21,25 +21,28 @@ import java.util.concurrent.TimeUnit;
 
 public class SetupTicket extends SlashCommand {
     public SetupTicket(){
-        /*TODO: dodati da mozes da stavis id ili channel*/
         this.name = "setupticket";
         this.help = "Sends embed with button to open ticket in the channel";
         this.cooldown = 30;
         this.userPermissions = new Permission[]{Permission.ADMINISTRATOR};
-        this.options = Collections.singletonList(new OptionData(OptionType.STRING, "categoryId", "Your category id for ticket channels").setRequired(true));
+        this.options = Collections.singletonList(new OptionData(OptionType.STRING, "category", "Category id for your ticket channels").setRequired(true));
     }
     @Override
     protected void execute(SlashCommandEvent event) {
         EmbedBuilder eb = new EmbedBuilder();
-        String categoryId = Objects.requireNonNull(event.optString("categoryId"));
-        net.dv8tion.jda.api.entities.Category category = event.getJDA().getCategoryById(categoryId);
-        if(category == null) {
-            eb.setColor(Color.RED);
-            eb.setDescription(":no_entry: Invalid category id, try again!");
-            event.replyEmbeds(eb.build()).setEphemeral(true).queue();
+        String categoryId = Objects.requireNonNull(event.optString("category"));
+        net.dv8tion.jda.api.entities.Category category;
+        try{
+            category = event.getJDA().getCategoryById(categoryId);
+        }catch (NumberFormatException e){
+            invalidEmbed(eb, event);;
             return;
         }
-        Bot.getInstance().getConf().getValues().set("Tickets.ticketsCategoryId", category);
+        if(category == null) {
+            invalidEmbed(eb, event);
+            return;
+        }
+        Bot.getInstance().getConf().getValues().set("Tickets.ticketsCategoryId", category.getId());
         Bot.getInstance().getConf().saveConfig();
         event.reply("fck discord").queue(msg -> msg.deleteOriginal().queueAfter(1, TimeUnit.MILLISECONDS)); //literally know no better way to acknowledge this interaction >.<
         eb.setTitle(ConfigUtils.getString("Embeds.ticket.title"));
@@ -48,4 +51,10 @@ public class SetupTicket extends SlashCommand {
         eb.setFooter(ConfigUtils.getString("Embeds.ticket.footerText"), ConfigUtils.getString("Embeds.ticket.footerIcon"));
         event.getTextChannel().sendMessageEmbeds(eb.build()).setActionRow(Button.of(ButtonStyle.SUCCESS, "ticket", "Submit a ticket!", Emoji.fromUnicode("U+1F4E9"))).queue();
     }
+    private void invalidEmbed(EmbedBuilder eb, SlashCommandEvent e){
+        eb.setColor(Color.RED);
+        eb.setDescription(":no_entry: Invalid category id, try again!");
+        e.replyEmbeds(eb.build()).setEphemeral(true).queue();
+    }
 }
+
